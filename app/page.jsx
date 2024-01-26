@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Card from "@/components/Card";
 
 const BASE_URL = "https://www.themoviedb.org/t/p/w220_and_h330_face";
 
@@ -45,50 +46,15 @@ export default async function Home() {
             </div>
             <div className="container mt-[5rem] hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[3rem] mb-[10rem]">
                 {rest.map((item) => (
-                    <Link
-                        href={`/movies/${item.id}`}
-                        key={item.id}
-                        className=" max-w-[220px] hover:translate-y-[-20px] transition-all shadow-md "
-                    >
-                        <div className=" w-full overflow-hidden rounded-md relative">
-                            <Image
-                                src={BASE_URL + item.poster_path}
-                                alt={item?.title}
-                                width={600}
-                                height={800}
-                                className=" w-full h-full object-cover "
-                            />
-                            <div className=" absolute bottom-0 left-0 w-full p-4 z-10 backdrop-blur-sm bg-background/50 ">
-                                <small className="text-sm font-medium leading-none">
-                                    {item?.title}
-                                </small>
-                            </div>
-                        </div>
-                    </Link>
+                    <Card key={item.id} item={item} />
                 ))}
             </div>
             <div className=" contaiver md:hidden my-[5rem] px-4">
                 <Carousel>
                     <CarouselContent>
                         {rest.map((item) => (
-                            <CarouselItem
-                                key={item.id}
-                                className=" max-w-[220px] shadow-md"
-                            >
-                                <div className=" w-full overflow-hidden rounded-md relative">
-                                    <Image
-                                        src={BASE_URL + item.poster_path}
-                                        alt={item?.title}
-                                        width={600}
-                                        height={800}
-                                        className=" w-full h-full object-cover "
-                                    />
-                                    <div className=" absolute bottom-0 left-0 w-full p-4 z-10 backdrop-blur-sm bg-background/50 ">
-                                        <small className="text-sm font-medium leading-none">
-                                            {item?.title}
-                                        </small>
-                                    </div>
-                                </div>
+                            <CarouselItem key={item.id}>
+                                <Card item={item} />
                             </CarouselItem>
                         ))}
                     </CarouselContent>

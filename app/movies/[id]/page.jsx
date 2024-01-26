@@ -2,7 +2,6 @@ import { Badge } from "@/components/ui/badge";
 import { getMovieDetails, getSimilarMovies } from "@/lib/requests";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
 import {
     Carousel,
     CarouselContent,
@@ -22,8 +21,8 @@ export default async function page({ params: { id } }) {
                 <div className=" w-full ">
                     <div className=" aspect-[3/2] md:aspect-[2/3] overflow-hidden rounded-lg w-full max-w-[400px]">
                         <Image
-                            src={BASE_URL + data.backdrop_path}
-                            alt={data.original_title}
+                            src={BASE_URL + data?.backdrop_path}
+                            alt={data?.original_title}
                             width={600}
                             height={800}
                             className=" w-full h-full object-cover object-top "
@@ -33,8 +32,8 @@ export default async function page({ params: { id } }) {
 
                 <div className=" pt-5 ">
                     <div className=" flex gap-4 flex-wrap mb-4 ">
-                        {data.genres.map((item) => (
-                            <Badge key={item.id} variant="outline">
+                        {data?.genres.map((item) => (
+                            <Badge key={item?.id} variant="outline">
                                 {item.name}
                             </Badge>
                         ))}
@@ -44,10 +43,10 @@ export default async function page({ params: { id } }) {
                     </p>
 
                     <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                        {data.original_title}
+                        {data?.original_title}
                     </h1>
                     <p className="leading-7 [&:not(:first-child)]:mt-6">
-                        {data.overview}
+                        {data?.overview}
                     </p>
                     <div className="my-6 w-full overflow-y-auto mt-[5rem]">
                         <table className="w-full">
@@ -101,50 +100,15 @@ export default async function page({ params: { id } }) {
             </h2>
             <div className="container mt-[5rem] hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[3rem] mb-[10rem]">
                 {rest.map((item) => (
-                    <Link
-                        href={`/movies/${item.id}`}
-                        key={item.id}
-                        className=" max-w-[220px] hover:translate-y-[-20px] transition-all shadow-md "
-                    >
-                        <div className=" w-full overflow-hidden rounded-md relative">
-                            <Image
-                                src={BASE_URL + item.poster_path}
-                                alt={item?.title}
-                                width={600}
-                                height={800}
-                                className=" w-full h-full object-cover "
-                            />
-                            <div className=" absolute bottom-0 left-0 w-full p-4 z-10 backdrop-blur-sm bg-background/50 ">
-                                <small className="text-sm font-medium leading-none">
-                                    {item?.title}
-                                </small>
-                            </div>
-                        </div>
-                    </Link>
+                    <Card item={item} key={item.id} />
                 ))}
             </div>
             <div className=" contaiver md:hidden my-[5rem] px-4">
                 <Carousel>
                     <CarouselContent>
                         {rest.map((item) => (
-                            <CarouselItem
-                                key={item.id}
-                                className=" max-w-[220px] shadow-md"
-                            >
-                                <div className=" w-full overflow-hidden rounded-md relative">
-                                    <Image
-                                        src={BASE_URL + item.poster_path}
-                                        alt={item?.title}
-                                        width={600}
-                                        height={800}
-                                        className=" w-full h-full object-cover "
-                                    />
-                                    <div className=" absolute bottom-0 left-0 w-full p-4 z-10 backdrop-blur-sm bg-background/50 ">
-                                        <small className="text-sm font-medium leading-none">
-                                            {item?.title}
-                                        </small>
-                                    </div>
-                                </div>
+                            <CarouselItem key={item.id}>
+                                <Card item={item} />
                             </CarouselItem>
                         ))}
                     </CarouselContent>
