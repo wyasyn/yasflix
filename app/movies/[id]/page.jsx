@@ -19,7 +19,7 @@ export async function generateMetadata({ params: { id } }) {
         title: data?.original_title,
         description: data?.overview,
         openGraph: {
-            images: [{ url: `${BASE_URL + data?.backdrop_path}` }],
+            images: [{ url: BASE_URL + data?.backdrop_path }],
         },
     };
 }
