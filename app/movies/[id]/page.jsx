@@ -13,6 +13,17 @@ import Card from "@/components/Card";
 
 const BASE_URL = "https://www.themoviedb.org/t/p/w220_and_h330_face";
 
+export async function generateMetadata({ params: { id } }) {
+    const data = await getMovieDetails(id);
+    return {
+        title: data?.original_title,
+        description: data?.overview,
+        openGraph: {
+            images: [{ url: `${BASE_URL + data?.backdrop_path}` }],
+        },
+    };
+}
+
 export default async function page({ params: { id } }) {
     const data = await getMovieDetails(id);
     const rest = await getSimilarMovies(id);
