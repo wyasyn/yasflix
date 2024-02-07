@@ -9,12 +9,32 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import Card from "@/components/Card";
 
 const BASE_URL = "https://www.themoviedb.org/t/p/w220_and_h330_face";
 
 export default async function page({ params: { id } }) {
     const data = await getMovieDetails(id);
     const rest = await getSimilarMovies(id);
+
+    if (!data) {
+        return (
+            <div className=" grid place-items-center min-h-[70vh]">
+                <p className=" text-2xl text-center ">
+                    No movies with this ID!
+                </p>
+            </div>
+        );
+    }
+    if (!rest) {
+        return (
+            <div className=" grid place-items-center min-h-[70vh]">
+                <p className=" text-2xl text-center ">
+                    No similar movies present!
+                </p>
+            </div>
+        );
+    }
     return (
         <div>
             <div className=" mt-[7rem] mb-[5rem] container flex flex-col lg:flex-row gap-[5rem]">
@@ -64,7 +84,7 @@ export default async function page({ params: { id } }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.production_companies.map((item) => (
+                                {data?.production_companies.map((item) => (
                                     <tr
                                         className="m-0 border-t p-0 even:bg-muted"
                                         key={item.id}
@@ -99,14 +119,14 @@ export default async function page({ params: { id } }) {
                 Similar Movies
             </h2>
             <div className="container mt-[5rem] hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[3rem] mb-[10rem]">
-                {rest.map((item) => (
+                {rest?.map((item) => (
                     <Card item={item} key={item.id} />
                 ))}
             </div>
             <div className=" contaiver md:hidden my-[5rem] px-4">
                 <Carousel>
                     <CarouselContent>
-                        {rest.map((item) => (
+                        {rest?.map((item) => (
                             <CarouselItem key={item.id}>
                                 <Card item={item} />
                             </CarouselItem>
